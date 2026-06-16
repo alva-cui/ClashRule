@@ -41,19 +41,6 @@
 
 ## 使用方式
 
-### 方式1：订阅转换前端（推荐）
-
-1. 打开 [肥羊订阅转换前端](https://suburl.v1.mk/)
-2. 填入你的机场订阅链接
-3. 远程配置填入：
-   ```
-   https://raw.githubusercontent.com/cutethotw/ClashRule/main/GeneralClashRule.ini
-   ```
-4. 生成类型选择 `clash`
-5. 点击生成，复制生成的订阅链接导入 Clash Verge 即可
-
-### 方式2：Clash Verge 直接引用
-
 在 Clash Verge 的订阅转换中使用本仓库的远程配置地址：
 
 ```
@@ -84,30 +71,8 @@ AI服务分组包含以下主流 AI 平台：
 | Copilot | AI.yaml |
 | 其他 AI 服务 | AI.yaml（100+ 域名） |
 
-## 文件说明
-
-| 文件 | 说明 |
-|------|------|
-| `GeneralClashRule.ini` | 主配置（ruleset + proxy groups） |
-| `GeneralClashConfig.yml` | Clash 基础配置模板 |
-| `Back.ini` | 备用配置（大陆节点回国用） |
-| `Rule/` | 自定义规则文件目录 |
-
-## 更新规则
-
-规则全部引用远程源，只需更新 `GeneralClashRule.ini` 中的 ruleset 链接即可。
-
-如需添加新的规则源，在 `GeneralClashRule.ini` 中添加：
-```ini
-ruleset=🚀 国外流量,clash-classic:https://raw.githubusercontent.com/xxx/xxx.yaml
-```
-
 ## 参考项目
 
 - [ACL4SSR/ACL4SSR](https://github.com/ACL4SSR/ACL4SSR)
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
 - [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
-
-## 许可证
-
-MIT License
