@@ -1,0 +1,381 @@
+# ============================================================
+# Clash Verge Rev 本地配置：双订阅合并 + 精简分流
+# 适用版本：v2.5.x
+# 使用方法：
+#   1. Clash Verge Rev → Profiles（订阅）→ + → 新建 Local（本地配置）
+#   2. 把本文件内容全部粘贴进去，保存
+#   3. 点击启用（激活）该配置
+#   4. 右键该配置 → 更新代理集 / 更新规则集
+# 节点更新：proxy-providers 的 interval（秒）控制自动拉取
+# ============================================================
+
+# ============================================================
+# 订阅变量区（修改订阅只需改这里）
+# ⚠️ SUB1_TOKEN / SUB2_TOKEN 替换为你的订阅 token（地址末尾加 &flag=clash 转 Clash 格式）
+# ============================================================
+x-订阅1: &sub1-url ''
+x-订阅2: &sub2-url ''
+x-hc: &hc
+  enable: true
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+
+mixed-port: 1028
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+unified-delay: true
+
+# ---------------- DNS ----------------
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+  nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+
+# ---------------- 订阅合并（两个订阅源） ----------------
+proxy-providers:
+  订阅1:
+    type: http
+    url: *sub1-url
+    interval: 3600
+    path: ./proxy_provider/sub1.yaml
+    health-check: *hc
+  订阅2:
+    type: http
+    url: *sub2-url
+    interval: 3600
+    path: ./proxy_provider/sub2.yaml
+    health-check: *hc
+
+# ---------------- 规则集（多源备用：raw 不通自动换 jsdelivr） ----------------
+rule-providers:
+  lan:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml
+    path: ./ruleset/lan.yaml
+  ad:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml
+    path: ./ruleset/ad.yaml
+  replenish:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/alva-cui/ClashRule@main/Rule/Replenish.yaml
+    path: ./ruleset/replenish.yaml
+  ai:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/alva-cui/ClashRule@main/Rule/AI.yaml
+    path: ./ruleset/ai.yaml
+  gemini:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml
+    path: ./ruleset/gemini.yaml
+  claude:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
+    path: ./ruleset/claude.yaml
+  openai:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./ruleset/openai.yaml
+  copilot:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Copilot/Copilot.yaml
+    path: ./ruleset/copilot.yaml
+  telegram:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml
+    path: ./ruleset/telegram.yaml
+  youtube:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml
+    path: ./ruleset/youtube.yaml
+  discord:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Discord/Discord.yaml
+    path: ./ruleset/discord.yaml
+  netflix:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml
+    path: ./ruleset/netflix.yaml
+  github:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml
+    path: ./ruleset/github.yaml
+  direct:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml
+    path: ./ruleset/direct.yaml
+  chinamax:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical_No_IPv6.yaml
+    path: ./ruleset/chinamax.yaml
+  douyin:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/DouYin/DouYin.yaml
+    path: ./ruleset/douyin.yaml
+  youku:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Youku/Youku.yaml
+    path: ./ruleset/youku.yaml
+  apifox:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apifox/Apifox.yaml
+    path: ./ruleset/apifox.yaml
+  global:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml
+    path: ./ruleset/global.yaml
+  google:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml
+    path: ./ruleset/google.yaml
+
+# ---------------- 代理组 ----------------
+proxy-groups:
+  # ===== 基础分组 =====
+  # 手动选择：两个订阅所有节点
+  - name: 🤖 AI自动
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '美国|US|United States|新加坡|狮城|SG|Singapore|GPT|Gemini'
+
+  - name: 🧚 AI服务
+    type: select
+    proxies:
+      - 🤖 AI自动
+      - 🇺🇸 美国节点
+      - 🇸🇬 新加坡
+      - ✈️ 手动选择
+
+  - name: 🚀 国外流量
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🔯 故障转移
+      - ✈️ 手动选择
+
+  - name: 🎯 国内流量
+    type: select
+    proxies:
+      - DIRECT
+      - ♻️ 自动选择
+      - ✈️ 手动选择
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 国外流量
+      - DIRECT
+      - ✈️ 手动选择
+
+  - name: ✈️ 手动选择
+    type: select
+    use:
+      - 订阅1
+      - 订阅2
+
+  # 自动选择：自动测速，排除信息行 / 运营商节点
+  - name: ♻️ 自动选择
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    exclude-filter: '剩余|流量|套餐|到期|过滤|电信|联通|移动|官网|客服'
+
+  # 故障转移：自动选择挂了之后按顺序切换
+  - name: 🔯 故障转移
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 600
+    use:
+      - 订阅1
+      - 订阅2
+    exclude-filter: '剩余|流量|套餐|到期|过滤|电信|联通|移动|官网|客服'
+
+  # ===== 地区分组（按节点名正则匹配，自动归组） =====
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🇭🇰 香港节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '香港|HK|Hong Kong|HongKong|澳门|MO|Macau'
+
+  - name: 🇺🇸 美国节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '美国|US|United States|LA'
+
+  - name: 🇸🇬 新加坡
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '新加坡|狮城|SG|Singapore|shiche'
+
+  - name: 🇯🇵 日本节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '日本|JP|Japan'
+
+  - name: 🇨🇳 台湾节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    filter: '台湾|TW|Taiwan'
+
+  # 其他地区：排除所有已分组的地区
+  - name: 🌍 其他地区
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - 订阅1
+      - 订阅2
+    exclude-filter: '香港|HK|Hong Kong|HongKong|澳门|MO|Macau|新加坡|狮城|SG|Singapore|shiche|日本|JP|Japan|美国|US|United States|LA|台湾|TW|Taiwan|剩余|流量|套餐|到期|过滤'
+
+  # ===== 业务分组 =====
+  # AI 自动：优先美/新节点（AI 服务解锁）
+# ---------------- 分流规则（引用上面定义的规则集） ----------------
+rules:
+  # 局域网直连
+  - RULE-SET,lan,DIRECT,no-resolve
+
+  # 广告拦截
+  - RULE-SET,ad,🛑 广告拦截
+
+  # 补充规则（本仓库）
+  - RULE-SET,replenish,DIRECT
+
+  # AI 服务
+  - RULE-SET,ai,🧚 AI服务
+  - RULE-SET,gemini,🧚 AI服务
+  - RULE-SET,claude,🧚 AI服务
+  - RULE-SET,openai,🧚 AI服务
+  - RULE-SET,copilot,🧚 AI服务
+
+  # 通讯
+  - RULE-SET,telegram,🚀 国外流量
+
+  # 流媒体 / 国外常用
+  - RULE-SET,youtube,🚀 国外流量
+  - RULE-SET,discord,🚀 国外流量
+  - RULE-SET,netflix,🚀 国外流量
+  - RULE-SET,github,🚀 国外流量
+
+  # 国内直连
+  - RULE-SET,direct,🎯 国内流量
+  - RULE-SET,chinamax,🎯 国内流量
+  - RULE-SET,douyin,🎯 国内流量
+  - RULE-SET,youku,🎯 国内流量
+  - RULE-SET,apifox,🎯 国内流量
+
+  # 国内 IP 兜底
+  - GEOIP,CN,DIRECT
+
+  # 国外流量兜底
+  - RULE-SET,global,🚀 国外流量
+  - RULE-SET,google,🚀 国外流量
+
+  # 漏网之鱼
+  - MATCH,🐟 漏网之鱼

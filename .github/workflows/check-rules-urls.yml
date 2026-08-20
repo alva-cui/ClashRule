@@ -1,0 +1,18 @@
+name: 规则集 URL 巡检
+
+on:
+  schedule:
+    # 每周一凌晨 2 点（UTC+8 = 10 点）
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: 检查远程规则集 URL
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 运行 URL 检查脚本
+        run: bash scripts/check_rules_urls.sh
