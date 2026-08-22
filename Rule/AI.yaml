@@ -464,3 +464,7 @@ payload:
 
   # Zed / Core
   - DOMAIN-SUFFIX,zed.dev
+  
+  # 自定义
+  - DOMAIN-SUFFIX,b.ai
+  - DOMAIN-SUFFIX,z.ai
